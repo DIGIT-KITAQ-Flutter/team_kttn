@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "496304352751",
+    "project_id": "dig-it-kttn",
+    "storage_bucket": "dig-it-kttn.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496304352751:android:2b26ee64156714bd72da1a",
+        "android_client_info": {
+          "package_name": "com.example.digit_kttn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsi_1ZxfSx8fmB86Pyoa-4HchDS0wfToI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
