@@ -36,12 +36,12 @@
   },
   {
     "name": "永犬丸駅",
-    "latitude": 33.8500,
+    "latitude": 33.85,
     "longitude": 130.7339
   },
   {
     "name": "石原町駅",
-    "latitude": 33.8790,
+    "latitude": 33.879,
     "longitude": 130.8887
   },
   {
@@ -62,7 +62,7 @@
   {
     "name": "新木屋瀬駅",
     "latitude": 33.8437,
-    "longitude": 130.7340
+    "longitude": 130.734
   },
   {
     "name": "木屋瀬駅",
@@ -92,7 +92,7 @@
   {
     "name": "香月駅",
     "latitude": 33.8441,
-    "longitude": 130.7340
+    "longitude": 130.734
   },
   {
     "name": "筑豊香月駅",

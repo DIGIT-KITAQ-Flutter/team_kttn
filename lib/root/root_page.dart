@@ -1,4 +1,4 @@
-import 'package:digit_kttn/map/map.dart';
+import 'package:digit_kttn/map/map_page.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class _RootPageState extends State<RootPage> {
           variant: ButtonVariant.text,
         )
       ]),
-      body: const MapScreen(),
+      body: MapPage(),
     );
   }
 }

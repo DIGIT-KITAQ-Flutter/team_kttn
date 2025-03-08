@@ -12,7 +12,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_maps_flutter: ^2.1.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -21,6 +20,8 @@ dependencies:
   firebase_auth: ^5.5.1
   firebase_ui_auth: ^1.16.1
   cloud_firestore: ^5.6.5
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +37,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/default_icon.png
+    - assets/json/stations.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
