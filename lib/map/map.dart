@@ -1,127 +1,8 @@
-// Map画面です。ここを編集してください。
-// 今は簡易的にボタンを配置して押したらChat画面に遷移するようにしています。
-// ボタンが駅のイメージです。
-
-// class MapScreen extends StatefulWidget {
-//   const MapScreen({super.key});
-
-//   @override
-//   State<MapScreen> createState() => _MapScreenState();
-// }
-
-// class _MapScreenState extends State<MapScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//         child: IconButton(
-//           icon: const Icon(Icons.location_on, color: Colors.red, size: 40),
-//           onPressed: () {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(builder: (context) => ChatScreen()),
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
-import 'package:digit_kttn/chat/chat.dart';
-import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:flutter_map/flutter_map.dart';
-// import 'package:latlong2/latlong.dart';
-
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: Text('Map'),
-//           leading: IconButton(
-//             icon: Icon(Icons.menu),
-//             onPressed: () {
-//               // アイコンが押されたときの処理をここに追加します
-//             },
-//           ),
-//           actions: [
-//             IconButton(
-//               icon: Icon(Icons.logout),
-//               onPressed: () {
-//                 // ログアウトボタンが押されたときの処理をここに追加します
-//               },
-//             ),
-//           ],
-//         ),
-//         body: Stack(
-//           children: [
-//             MapScreen(),
-//             Positioned(
-//               top: 10.0,
-//               left: 10.0,
-//               right: 10.0,
-//               child: Container(
-//                 padding: EdgeInsets.symmetric(horizontal: 10.0),
-//                 decoration: BoxDecoration(
-//                   color: Colors.white,
-//                   borderRadius: BorderRadius.circular(10.0),
-//                   boxShadow: [
-//                     BoxShadow(
-//                       color: Colors.black26,
-//                       blurRadius: 10.0,
-//                       offset: Offset(0, 2),
-//                     ),
-//                   ],
-//                 ),
-//                 child: TextField(
-//                   decoration: InputDecoration(
-//                     hintText: '検索',
-//                     border: InputBorder.none,
-//                     icon: Icon(Icons.search),
-//                   ),
-//                   onSubmitted: (value) {
-//                     // 検索バーに入力された値を処理する
-//                   },
-//                 ),
-//               ),
-//             ),
-//             DraggableScrollableSheet(
-//               initialChildSize: 0.1,
-//               minChildSize: 0.1,
-//               maxChildSize: 0.5,
-//               builder: (BuildContext context, ScrollController scrollController) {
-//                 return Container(
-//                   color: Colors.white,
-//                   child: ListView.builder(
-//                     controller: scrollController,
-//                     itemCount: 20, // コメントの数に応じて変更
-//                     itemBuilder: (BuildContext context, int index) {
-//                       return ListTile(
-//                         leading: CircleAvatar(
-//                           backgroundImage: AssetImage('assets/profile.jpg'),
-//                         ),
-//                         title: Text('Dummy comment $index - This is a sample comment.'),
-//                         subtitle: Text('${index + 1} days ago'),
-//                       );
-//                     },
-//                   ),
-//                 );
-//               },
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -143,14 +24,15 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
       _markers = data.map((station) {
         return Marker(
-          width: 80.0,
-          height: 80.0,
-          point: LatLng(station['latitude'], station['longitude']),
-          builder: (ctx) => Container(
+          width: 80.0, // 幅を80に設定
+          height: 80.0, // 高さを80に設定
+          point: LatLng(station['latitude'], station['longitude']), // 緯度経度を使用
+          child: Container(
+            // マーカーとして表示するウィジェットを指定
             child: Icon(
               Icons.location_on,
-              color: Colors.red,
-              size: 40.0,
+              color: Colors.red, // アイコンの色を赤に設定
+              size: 40.0, // アイコンのサイズを40に設定
             ),
           ),
         );
@@ -162,8 +44,8 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return FlutterMap(
       options: MapOptions(
-        center: LatLng(33.8833, 130.8757), // 北九州市の緯度経度
-        zoom: 14.0,
+        initialCenter: LatLng(33.8833, 130.8757), // 北九州市の緯度経度
+        initialZoom: 14.0,
       ),
       children: [
         TileLayer(

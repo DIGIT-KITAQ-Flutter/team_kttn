@@ -18,7 +18,7 @@ class _RootPageState extends State<RootPage> {
           variant: ButtonVariant.text,
         )
       ]),
-      body: const MapScreen(),
+      body: MapScreen(),
     );
   }
 }
