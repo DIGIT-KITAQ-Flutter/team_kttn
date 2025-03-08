@@ -19,7 +19,8 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _loadStations() async {
-    final String response = await rootBundle.loadString('assets/stations.json');
+    final String response =
+        await rootBundle.loadString('assets/json/stations.json');
     final List<dynamic> data = json.decode(response);
     setState(() {
       _markers = data.map((station) {

@@ -1,35 +1,18 @@
-import 'package:digit_kttn/map/map.dart';
+import 'package:digit_kttn/map/map_screen.dart';
 import 'package:flutter/material.dart';
 
-class BottomSheet extends StatefulWidget {
-  const BottomSheet({super.key});
+class BottomWidget extends StatefulWidget {
+  const BottomWidget({super.key});
 
   @override
-  State<BottomSheet> createState() => _BottomSheetState();
+  State<BottomWidget> createState() => _BottomWidgetState();
 }
 
-class _BottomSheetState extends State<BottomSheet> {
+class _BottomWidgetState extends State<BottomWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Map'),
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              // アイコンが押されたときの処理をここに追加します
-            },
-          ),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.logout),
-              onPressed: () {
-                // ログアウトボタンが押されたときの処理をここに追加します
-              },
-            ),
-          ],
-        ),
         body: Stack(
           children: [
             MapScreen(),
@@ -76,7 +59,8 @@ class _BottomSheetState extends State<BottomSheet> {
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                         leading: CircleAvatar(
-                          backgroundImage: AssetImage('assets/profile.jpg'),
+                          backgroundImage:
+                              AssetImage('assets/images/default_icon.png'),
                         ),
                         title: Text(
                             'Dummy comment $index - This is a sample comment.'),
