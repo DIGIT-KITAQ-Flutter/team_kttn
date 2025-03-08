@@ -1,6 +1,11 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
+    id "com.android.application"
+    // START: FlutterFire Configuration
+    id 'com.google.gms.google-services'
+    // END: FlutterFire Configuration
+    id "kotlin-android"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id "dev.flutter.flutter-gradle-plugin"
 }
 
 buildscript {
@@ -42,11 +47,15 @@ tasks.register("clean", Delete) {
 android {
     compileSdkVersion(33)
     defaultConfig {
-        applicationId = "com.example.new_team_kttn"
-        minSdkVersion(21)
-        targetSdkVersion(33)
-        versionCode = 1
-        versionName = "1.0"
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId = "com.example.digit_kttn"
+        // You can update the following values to match your application needs.
+        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
+        // minSdk = flutter.minSdkVersion
+        minSdkVersion 23
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutterVersionCode.toInteger()
+        versionName = flutterVersionName
     }
     compileOptions {
         sourceCompatibility(JavaVersion.VERSION_1_8)

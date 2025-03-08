@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/dgit/kttn/team_kttn/new_team_kttn/windows"
+    "cmake.sourceDirectory": "C:/dgit/kttn/team_kttn/new_team_kttn/windows",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
