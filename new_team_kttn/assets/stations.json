@@ -103,5 +103,75 @@
     "name": "福岡市駅",
     "latitude": 33.5902,
     "longitude": 130.4017
+  },
+  {
+    "name": "小倉駅",
+    "latitude": 33.8833,
+    "longitude": 130.8757
+  },
+  {
+    "name": "門司港駅",
+    "latitude": 33.9431,
+    "longitude": 130.9581
+  },
+  {
+    "name": "黒崎駅",
+    "latitude": 33.8667,
+    "longitude": 130.7667
+  },
+  {
+    "name": "折尾駅",
+    "latitude": 33.8333,
+    "longitude": 130.7333
+  },
+  {
+    "name": "戸畑駅",
+    "latitude": 33.8833,
+    "longitude": 130.8333
+  },
+  {
+    "name": "八幡駅",
+    "latitude": 33.8667,
+    "longitude": 130.8000
+  },
+  {
+    "name": "若松駅",
+    "latitude": 33.9000,
+    "longitude": 130.8167
+  },
+  {
+    "name": "下曽根駅",
+    "latitude": 33.8333,
+    "longitude": 130.9000
+  },
+  {
+    "name": "安部山公園駅",
+    "latitude": 33.8333,
+    "longitude": 130.9167
+  },
+  {
+    "name": "城野駅",
+    "latitude": 33.8500,
+    "longitude": 130.8667
+  },
+  {
+    "name": "南小倉駅",
+    "latitude": 33.8833,
+    "longitude": 130.8833
+  },
+  {
+    "name": "西小倉駅",
+    "latitude": 33.8833,
+    "longitude": 130.8667
+  },
+  {
+    "name": "東小倉駅",
+    "latitude": 33.8833,
+    "longitude": 130.8833
+  },
+  {
+    "name": "門司駅",
+    "latitude": 33.9333,
+    "longitude": 130.9500
   }
 ]
