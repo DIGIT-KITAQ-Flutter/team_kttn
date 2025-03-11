@@ -26,6 +26,10 @@ Flutter/flutter_assets/
 Flutter/flutter_export_environment.sh
 ServiceDefinitions.json
 Runner/GeneratedPluginRegistrant.*
+Config.plist
+
+# APIキー等を設定するファイル
+Runner/Config.plist
 
 # Exceptions to above rules.
 !default.mode1v3
