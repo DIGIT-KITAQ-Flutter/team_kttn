@@ -14,15 +14,15 @@ class ChatApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const ChatScreen(
-        stationId: 'station_123',
+        station_id: 'station_123',
       ),
     );
   }
 }
 
 class ChatScreen extends StatefulWidget {
-  final String stationId;
-  const ChatScreen({super.key, required this.stationId});
+  final String station_id;
+  const ChatScreen({super.key, required this.station_id});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -39,7 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
     await sendMessageToFirestore(
       message: _textController.text,
       crowdingLevel: "chat", // デフォルト値（ボタン選択時は変更）
-      stationId: "station_123",
+      stationId: widget.station_id,
       userId: "user_456",
     );
 
@@ -51,7 +51,7 @@ class _ChatScreenState extends State<ChatScreen> {
     await sendMessageToFirestore(
       message: "", // メッセージなし
       crowdingLevel: choice,
-      stationId: "station_123",
+      stationId: widget.station_id,
       userId: "user_456",
     );
     _scrollToBottom();
@@ -70,14 +70,14 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("${widget.stationId} のチャット")),
+      appBar: AppBar(title: Text("${widget.station_id} のチャット")),
       body: Column(
         children: [
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('station_chats')
-                  .where('station_id', isEqualTo: widget.stationId)
+                  .where('station_id', isEqualTo: widget.station_id)
                   .where('crowding_level', isEqualTo: 'chat')
                   .orderBy('created_message', descending: false) // 新着順にソート
                   .snapshots(),
@@ -87,12 +87,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
 
                 if (snapshot.hasError) {
-                  print(snapshot);
                   return const Center(child: Text('エラーが発生しました'));
                 }
 
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  print(snapshot);
                   return const Center(child: Text('チャット履歴はありません'));
                 }
 
