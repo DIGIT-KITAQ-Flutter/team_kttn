@@ -13,16 +13,15 @@ class ChatApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ChatScreen(
-        station_id: 'station_123',
-      ),
+      home: const ChatScreen(station_id: 0, name: ""),
     );
   }
 }
 
 class ChatScreen extends StatefulWidget {
-  final String station_id;
-  const ChatScreen({super.key, required this.station_id});
+  final int station_id;
+  final String name;
+  const ChatScreen({super.key, required this.station_id, required this.name});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -70,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("${widget.station_id} のチャット")),
+      appBar: AppBar(title: Text("${widget.name} のチャット")),
       body: Column(
         children: [
           Expanded(

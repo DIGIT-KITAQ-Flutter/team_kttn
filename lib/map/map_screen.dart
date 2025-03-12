@@ -34,7 +34,13 @@ class _MapScreenState extends State<MapScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ChatScreen(station_id: station['name']),
+                  // builder: (context) => ChatScreen(
+                  //     station_id: station['station_id'] is int
+                  //         ? station['station_id']
+                  //         : int.tryParse(station['station_id'].toString()) ?? 0,
+                  //     name: station['name']),
+                  builder: (context) => ChatScreen(
+                      station_id: station['station_id'], name: station['name']),
                 ),
               );
             },
