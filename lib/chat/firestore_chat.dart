@@ -21,26 +21,6 @@ Future<void> sendMessageToFirestore({
   });
 }
 
-// Future<List<Map<String, dynamic>>> getChatHistoryForStation(
-//     int stationId) async {
-//   final firestore = FirebaseFirestore.instance;
-
-//   // 'station_chats' コレクションから指定した station_id を持つチャット履歴を取得
-//   QuerySnapshot querySnapshot = await firestore
-//       .collection('station_chats')
-//       .where('station_id', isEqualTo: stationId)
-//       .where('crowding_level', isEqualTo: 'chat')
-//       .orderBy('created_message', descending: true) // 新しいメッセージ順に並べる
-//       .get();
-
-//   // クエリ結果をリストに変換
-//   List<Map<String, dynamic>> chatHistory = querySnapshot.docs.map((doc) {
-//     return doc.data() as Map<String, dynamic>;
-//   }).toList();
-
-//   return chatHistory;
-// }
-
 Future<List<Map<String, dynamic>>> getChatHistoryForStation(
     int stationId) async {
   final firestore = FirebaseFirestore.instance;

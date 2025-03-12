@@ -14,6 +14,7 @@ class _BottomWidgetState extends State<BottomWidget> {
   Stream<QuerySnapshot> getChats() {
     return FirebaseFirestore.instance
         .collection('station_chats')
+        .where('crowding_level', isEqualTo: 'chat')
         .orderBy('created_message', descending: true)
         .snapshots();
   }
@@ -64,6 +65,7 @@ class _BottomWidgetState extends State<BottomWidget> {
                     stream: getChats(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
+                        print(snapshot);
                         return Center(child: CircularProgressIndicator());
                       }
 
