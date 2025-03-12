@@ -34,8 +34,7 @@ class _MapScreenState extends State<MapScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      ChatScreen(stationName: station['name']),
+                  builder: (context) => ChatScreen(station_id: station['name']),
                 ),
               );
             },

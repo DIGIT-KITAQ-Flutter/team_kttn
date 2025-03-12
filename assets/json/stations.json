@@ -1,105 +1,126 @@
 [
   {
+    "station_id": 1,
     "name": "北九州市駅",
     "latitude": 33.8833,
     "longitude": 130.8757
   },
   {
+    "station_id": 2,
     "name": "二島駅",
     "latitude": 33.8933,
     "longitude": 130.7568
   },
   {
+    "station_id": 3,
     "name": "藤ノ木駅",
     "latitude": 33.8975,
     "longitude": 130.7842
   },
   {
+    "station_id": 4,
     "name": "萩原駅",
     "latitude": 33.8423,
     "longitude": 130.7352
   },
   {
+    "station_id": 5,
     "name": "本城駅",
     "latitude": 33.8296,
     "longitude": 130.7558
   },
   {
+    "station_id": 6,
     "name": "奥洞海駅",
     "latitude": 33.8282,
     "longitude": 130.7812
   },
   {
+    "station_id": 7,
     "name": "枝光駅",
     "latitude": 33.8828,
     "longitude": 130.8212
   },
   {
+    "station_id": 8,
     "name": "永犬丸駅",
     "latitude": 33.85,
     "longitude": 130.7339
   },
   {
+    "station_id": 9,
     "name": "石原町駅",
     "latitude": 33.879,
     "longitude": 130.8887
   },
   {
+    "station_id": 10,
     "name": "出光美術館駅",
     "latitude": 33.9378,
     "longitude": 130.9436
   },
   {
+    "station_id": 11,
     "name": "今池駅",
     "latitude": 33.8511,
     "longitude": 130.7243
   },
   {
+    "station_id": 12,
     "name": "三ケ森駅",
     "latitude": 33.8563,
     "longitude": 130.7265
   },
   {
+    "station_id": 13,
     "name": "新木屋瀬駅",
     "latitude": 33.8437,
     "longitude": 130.734
   },
   {
+    "station_id": 14,
     "name": "木屋瀬駅",
     "latitude": 33.8424,
     "longitude": 130.7342
   },
   {
+    "station_id": 15,
     "name": "熊西駅",
     "latitude": 33.8519,
     "longitude": 130.7534
   },
   {
+    "station_id": 16,
     "name": "楠橋駅",
     "latitude": 33.8425,
     "longitude": 130.7154
   },
   {
+    "station_id": 17,
     "name": "朽網駅",
     "latitude": 33.8833,
     "longitude": 130.8875
   },
   {
+    "station_id": 18,
     "name": "スペースワールド駅",
     "latitude": 33.8722,
     "longitude": 130.8267
   },
   {
+    "station_id": 19,
     "name": "香月駅",
     "latitude": 33.8441,
     "longitude": 130.734
   },
   {
+    "station_id": 20,
     "name": "筑豊香月駅",
     "latitude": 33.8444,
     "longitude": 130.7341
   },
   {
+    "station_id": 21,
     "name": "福岡市駅",
     "latitude": 33.5902,
     "longitude": 130.4017
