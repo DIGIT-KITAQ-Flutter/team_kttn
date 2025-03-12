@@ -14,15 +14,15 @@ class ChatApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const ChatScreen(
-        stationId: 'station_123',
+        stationName: 'station_123',
       ),
     );
   }
 }
 
 class ChatScreen extends StatefulWidget {
-  final String stationId;
-  const ChatScreen({super.key, required this.stationId});
+  final String stationName;
+  const ChatScreen({super.key, required this.stationName});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -70,14 +70,14 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("${widget.stationId} のチャット")),
+      appBar: AppBar(title: Text("${widget.stationName} のチャット")),
       body: Column(
         children: [
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('station_chats')
-                  .where('station_id', isEqualTo: widget.stationId)
+                  .where('station_id', isEqualTo: widget.stationName)
                   .where('crowding_level', isEqualTo: 'chat')
                   .orderBy('created_message', descending: false) // 新着順にソート
                   .snapshots(),

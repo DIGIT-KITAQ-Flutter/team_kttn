@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:digit_kttn/chat/chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_map/flutter_map.dart';
@@ -28,12 +29,20 @@ class _MapScreenState extends State<MapScreen> {
           width: 80.0, // 幅を80に設定
           height: 80.0, // 高さを80に設定
           point: LatLng(station['latitude'], station['longitude']), // 緯度経度を使用
-          child: Container(
-            // マーカーとして表示するウィジェットを指定
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ChatScreen(stationName: station['name']),
+                ),
+              );
+            },
             child: Icon(
               Icons.location_on,
-              color: Colors.red, // アイコンの色を赤に設定
-              size: 40.0, // アイコンのサイズを40に設定
+              color: Colors.red,
+              size: 40.0,
             ),
           ),
         );
