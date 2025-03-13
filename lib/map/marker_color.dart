@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 String getMajorityCrowdingLevel(List<String> levels) {
+  if (levels.isEmpty) {
+    return '投稿なし'; // 投稿がない場合は黒
+  }
+
   Map<String, int> count = {'超渋滞': 0, '渋滞': 0, '少ない・普通': 0};
 
   for (var level in levels) {
@@ -26,7 +30,10 @@ Color getMarkerColor(String level) {
     case "渋滞":
       return Colors.orange; // 渋滞
     case "少ない・普通":
+      return Colors.green;
+    case "投稿なし":
+      return Colors.black;
     default:
-      return Colors.green; // 少ない・普通
+      return Colors.black;
   }
 }
