@@ -2,25 +2,10 @@ import 'package:digit_kttn/chat/firestore_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ChatApp extends StatelessWidget {
-  const ChatApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Chat Choices',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const ChatScreen(station_id: 0, name: ""),
-    );
-  }
-}
-
 class ChatScreen extends StatefulWidget {
   final int station_id;
   final String name;
+
   const ChatScreen({super.key, required this.station_id, required this.name});
 
   @override
@@ -28,16 +13,18 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  List<String> choices = ["少ない・普通", "渋滞", "超渋滞"];
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final FirestoreChatService _chatService =
+      FirestoreChatService(); // 🔥 Firestoreサービスのインスタンス
 
+  /// **メッセージ送信**
   void _sendMessage() async {
     if (_textController.text.isEmpty) return;
 
-    await sendMessageToFirestore(
+    await _chatService.sendMessage(
       message: _textController.text,
-      crowdingLevel: "chat", // デフォルト値（ボタン選択時は変更）
+      crowdingLevel: "chat",
       stationId: widget.station_id,
       userId: "user_456",
     );
@@ -46,16 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _scrollToBottom();
   }
 
-  void _handleChoice(String choice) async {
-    await sendMessageToFirestore(
-      message: "", // メッセージなし
-      crowdingLevel: choice,
-      stationId: widget.station_id,
-      userId: "user_456",
-    );
-    _scrollToBottom();
-  }
-
+  /// **スクロールを一番下に移動**
   void _scrollToBottom() {
     Future.delayed(const Duration(milliseconds: 100), () {
       _scrollController.animateTo(
@@ -74,29 +52,22 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('station_chats')
-                  .where('station_id', isEqualTo: widget.station_id)
-                  .where('crowding_level', isEqualTo: 'chat')
-                  .orderBy('created_message', descending: false) // 新着順にソート
-                  .snapshots(),
+              stream: _chatService
+                  .getChatStream(widget.station_id), // 🔥 Firestoreデータ取得
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
-
                 if (snapshot.hasError) {
                   return const Center(child: Text('エラーが発生しました'));
                 }
-
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(child: Text('チャット履歴はありません'));
+                  return const Center(child: Text('1時間以内のチャット履歴はありません'));
                 }
 
-                // Firestoreのデータをmessagesに格納
                 final chatData = snapshot.data!.docs;
                 final messages = chatData.map((doc) {
-                  return doc['message']?.toString() ?? ''; // 文字列に変換
+                  return doc['message']?.toString() ?? '';
                 }).toList();
 
                 return ListView.builder(
@@ -125,20 +96,6 @@ class _ChatScreenState extends State<ChatScreen> {
               },
             ),
           ),
-          const Divider(height: 1),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 10,
-              children: choices.map((choice) {
-                return ElevatedButton(
-                  onPressed: () => _handleChoice(choice),
-                  child: Text(choice),
-                );
-              }).toList(),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.all(10),
             child: Row(
@@ -156,13 +113,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: _sendMessage,
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(width: 5),
-                      Text("送信"), // テキスト
-                    ],
-                  ),
+                  child: const Text("送信"),
                 ),
               ],
             ),
