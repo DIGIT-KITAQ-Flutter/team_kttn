@@ -1,4 +1,5 @@
 import 'package:digit_kttn/chat/firestore_chat.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,20 +14,29 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  List<String> choices = ["少ない・普通", "渋滞", "超渋滞"];
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final FirestoreChatService _chatService =
-      FirestoreChatService(); // 🔥 Firestoreサービスのインスタンス
+  final FirestoreChatService _chatService = FirestoreChatService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   /// **メッセージ送信**
   void _sendMessage() async {
-    if (_textController.text.isEmpty) return;
+    if (_textController.text.trim().isEmpty) return;
+
+    final String? userId = _auth.currentUser?.uid;
+    if (userId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("ログインしていません")),
+      );
+      return;
+    }
 
     await _chatService.sendMessage(
-      message: _textController.text,
+      message: _textController.text.trim(),
       crowdingLevel: "chat",
       stationId: widget.station_id,
-      userId: "user_456",
+      userId: userId,
     );
 
     _textController.clear();
@@ -35,13 +45,34 @@ class _ChatScreenState extends State<ChatScreen> {
 
   /// **スクロールを一番下に移動**
   void _scrollToBottom() {
-    Future.delayed(const Duration(milliseconds: 100), () {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
     });
+  }
+
+  /// **混雑状況を送信**
+  void _handleChoice(String choice) async {
+    final String? userId = _auth.currentUser?.uid;
+    if (userId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("ログインしていません")),
+      );
+      return;
+    }
+
+    await _chatService.sendMessage(
+      message: "",
+      crowdingLevel: choice,
+      stationId: widget.station_id,
+      userId: userId,
+    );
+    _scrollToBottom();
   }
 
   @override
@@ -52,8 +83,7 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: _chatService
-                  .getChatStream(widget.station_id), // 🔥 Firestoreデータ取得
+              stream: _chatService.getChatStream(widget.station_id),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -66,34 +96,46 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
 
                 final chatData = snapshot.data!.docs;
-                final messages = chatData.map((doc) {
-                  return doc['message']?.toString() ?? '';
-                }).toList();
 
                 return ListView.builder(
                   controller: _scrollController,
                   padding: const EdgeInsets.all(10),
-                  itemCount: messages.length,
+                  itemCount: chatData.length,
                   itemBuilder: (context, index) {
+                    final chat =
+                        chatData[index].data() as Map<String, dynamic>? ?? {};
+                    final bool isMe = chat['user_id'] == _auth.currentUser?.uid;
+
                     return Align(
-                      alignment: messages[index].startsWith("あなた")
-                          ? Alignment.centerRight
-                          : Alignment.centerLeft,
+                      alignment:
+                          isMe ? Alignment.centerRight : Alignment.centerLeft,
                       child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 5),
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: messages[index].startsWith("あなた")
-                              ? Colors.blue[200]
-                              : Colors.grey[300],
+                          color: isMe ? Colors.blue[200] : Colors.grey[300],
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Text(messages[index]),
+                        child: Text(chat['message'] ?? ''),
                       ),
                     );
                   },
                 );
               },
+            ),
+          ),
+          const Divider(height: 1),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 10,
+              children: choices.map((choice) {
+                return ElevatedButton(
+                  onPressed: () => _handleChoice(choice),
+                  child: Text(choice),
+                );
+              }).toList(),
             ),
           ),
           Padding(
