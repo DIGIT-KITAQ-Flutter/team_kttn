@@ -33,9 +33,36 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   // Firestoreから混雑情報をリッスン
+  // void listenToCrowdingUpdates() {
+  //   FirebaseFirestore.instance
+  //       .collection('station_chats')
+  //       .snapshots()
+  //       .listen((snapshot) {
+  //     Map<String, List<String>> stationCrowdingData = {};
+
+  //     for (var doc in snapshot.docs) {
+  //       String stationId = doc['station_id'].toString();
+  //       String crowdingLevel = doc['crowding_level'];
+
+  //       if (!stationCrowdingData.containsKey(stationId)) {
+  //         stationCrowdingData[stationId] = [];
+  //       }
+  //       stationCrowdingData[stationId]!.add(crowdingLevel);
+  //     }
+
+  //     updateMarkers(stationCrowdingData);
+  //   });
+  // }
+
   void listenToCrowdingUpdates() {
+    final now = Timestamp.now();
+    final oneHourAgo = Timestamp.fromMillisecondsSinceEpoch(
+        now.millisecondsSinceEpoch - 3600 * 1000);
+
     FirebaseFirestore.instance
         .collection('station_chats')
+        .where('created_record',
+            isGreaterThanOrEqualTo: oneHourAgo) // 1時間以内のデータのみ取得
         .snapshots()
         .listen((snapshot) {
       Map<String, List<String>> stationCrowdingData = {};
