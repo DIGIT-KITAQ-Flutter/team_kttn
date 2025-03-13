@@ -65,7 +65,6 @@ class _BottomWidgetState extends State<BottomWidget> {
                     stream: getChats(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
-                        print(snapshot);
                         return Center(child: CircularProgressIndicator());
                       }
 

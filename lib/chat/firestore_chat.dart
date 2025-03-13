@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreChatService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   /// **メッセージを Firestore に送信**
   Future<void> sendMessage({
@@ -10,6 +12,11 @@ class FirestoreChatService {
     required int stationId,
     required String userId,
   }) async {
+    final User? user = _auth.currentUser; // 🔥 ログイン中のユーザー取得
+    if (user == null) {
+      return;
+    }
+
     final chatId = "test_id_${DateTime.now().millisecondsSinceEpoch}";
     final timestamp = Timestamp.now();
 
@@ -20,7 +27,7 @@ class FirestoreChatService {
       'crowding_level': crowdingLevel,
       'message': message,
       'station_id': stationId,
-      'user_id': userId,
+      'user_id': user.uid, // 🔥 ログインしているユーザーの UID を保存
     });
   }
 
