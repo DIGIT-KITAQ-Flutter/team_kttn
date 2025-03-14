@@ -66,6 +66,31 @@ class _ChatScreenState extends State<ChatScreen> {
       return;
     }
 
+    final now = DateTime.now();
+
+    // 🔍 Firestore からこのユーザーの最新の混雑状況投稿を取得
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('station_chats')
+        .where('user_id', isEqualTo: userId)
+        .where('station_id', isEqualTo: widget.station_id) // 同じ駅での投稿のみ取得
+        .orderBy('created_record', descending: true) // 最新順にソート
+        .limit(1) // 最新の1件だけ取得
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      final lastCreatedRecord =
+          (querySnapshot.docs.first['created_record'] as Timestamp).toDate();
+      final difference = now.difference(lastCreatedRecord).inSeconds;
+
+      if (difference < 300) {
+        // 5分（300秒）経過していなければブロック
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("5分間に1回しか選択できません (${300 - difference}秒後に可能)")),
+        );
+        return;
+      }
+    }
+
     await _chatService.sendMessage(
       message: "",
       crowdingLevel: choice,
