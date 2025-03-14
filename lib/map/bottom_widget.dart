@@ -53,7 +53,7 @@ class _BottomWidgetState extends State<BottomWidget> {
             ),
           ),
           DraggableScrollableSheet(
-            initialChildSize: 0.1,
+            initialChildSize: 0.3,
             minChildSize: 0.1,
             maxChildSize: 0.5,
             builder: (BuildContext context, ScrollController scrollController) {
@@ -80,8 +80,9 @@ class _BottomWidgetState extends State<BottomWidget> {
 
                         return ListTile(
                           leading: CircleAvatar(
+                            backgroundColor: Color.fromRGBO(178, 219, 206, 0.0),
                             backgroundImage:
-                                AssetImage('assets/images/default_icon.png'),
+                                AssetImage('assets/images/Qsute.png'),
                           ),
                           title: Text(chat['message'] ?? 'メッセージなし'),
                           subtitle: Text(chat['created_message'] != null
