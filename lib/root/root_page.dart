@@ -13,11 +13,18 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: const [
-        SignOutButton(
-          variant: ButtonVariant.text,
-        )
-      ]),
+      appBar: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset('assets/images/Qsute.png'),
+          ),
+          title: const Text('Qステ', textAlign: TextAlign.center),
+          centerTitle: true,
+          actions: const [
+            SignOutButton(
+              variant: ButtonVariant.text,
+            )
+          ]),
       body: MapPage(),
     );
   }
